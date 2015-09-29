@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3081101
-Release  : 20
+Release  : 21
 URL      : https://www.sqlite.org/2015/sqlite-autoconf-3081101.tar.gz
 Source0  : https://www.sqlite.org/2015/sqlite-autoconf-3081101.tar.gz
 Summary  : SQL database engine
