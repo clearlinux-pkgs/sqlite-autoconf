@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3110000
-Release  : 25
+Release  : 26
 URL      : http://sqlite.org/2016/sqlite-autoconf-3110000.tar.gz
 Source0  : http://sqlite.org/2016/sqlite-autoconf-3110000.tar.gz
 Summary  : SQL database engine
@@ -70,8 +70,8 @@ lib components for the sqlite-autoconf package.
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -fno-semantic-interposition -flto -O3 -falign-functions=32 "
-export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -flto -O3 -falign-functions=32 "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition -flto "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition -flto "
 %reconfigure --disable-static
 make V=1  %{?_smp_mflags} -j1
 
