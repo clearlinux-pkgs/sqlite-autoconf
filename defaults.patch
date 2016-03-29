@@ -1,14 +1,5 @@
 --- sqlite-autoconf-3100100/sqlite3.c~	2016-01-14 06:40:19.000000000 -0500
 +++ sqlite-autoconf-3100100/sqlite3.c	2016-03-20 20:55:59.457124988 -0400
-@@ -9014,7 +9014,7 @@
- ** The default size of a database page.
- */
- #ifndef SQLITE_DEFAULT_PAGE_SIZE
--# define SQLITE_DEFAULT_PAGE_SIZE 1024
-+# define SQLITE_DEFAULT_PAGE_SIZE 4096
- #endif
- #if SQLITE_DEFAULT_PAGE_SIZE>SQLITE_MAX_PAGE_SIZE
- # undef SQLITE_DEFAULT_PAGE_SIZE
 @@ -9029,7 +9029,7 @@
  ** SQLite will choose on its own.
  */

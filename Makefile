@@ -1,5 +1,5 @@
 PKG_NAME := sqlite-autoconf
-URL := http://sqlite.org/2016/sqlite-autoconf-3110100.tar.gz
+URL := http://www.sqlite.org/2016/sqlite-autoconf-3120000.tar.gz
 ARCHIVES :=
 
 include ../common/Makefile.common
