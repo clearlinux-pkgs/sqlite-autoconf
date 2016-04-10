@@ -1,0 +1,10 @@
+--- sqlite-autoconf-3120000/sqlite3.c~	2016-03-29 10:47:26.000000000 +0000
++++ sqlite-autoconf-3120000/sqlite3.c	2016-04-10 18:08:25.822186891 +0000
+@@ -48658,6 +48658,7 @@
+   pPager->sjfd = (sqlite3_file*)(pPtr += ROUND8(pVfs->szOsFile));
+   pPager->jfd =  (sqlite3_file*)(pPtr += journalFileSize);
+   pPager->zFilename =    (char*)(pPtr += journalFileSize);
++  pPager->journalMode = PAGER_JOURNALMODE_TRUNCATE;
+   assert( EIGHT_BYTE_ALIGNMENT(pPager->jfd) );
+ 
+   /* Fill in the Pager.zFilename and Pager.zJournal buffers, if required. */
