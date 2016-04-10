@@ -4,7 +4,7 @@
    pPager->sjfd = (sqlite3_file*)(pPtr += ROUND8(pVfs->szOsFile));
    pPager->jfd =  (sqlite3_file*)(pPtr += journalFileSize);
    pPager->zFilename =    (char*)(pPtr += journalFileSize);
-+  pPager->journalMode = PAGER_JOURNALMODE_TRUNCATE;
++  sqlite3PagerSetJournalMode(pPager, PAGER_JOURNALMODE_WAL);
    assert( EIGHT_BYTE_ALIGNMENT(pPager->jfd) );
  
    /* Fill in the Pager.zFilename and Pager.zJournal buffers, if required. */

@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3120000
-Release  : 30
+Release  : 31
 URL      : http://www.sqlite.org/2016/sqlite-autoconf-3120000.tar.gz
 Source0  : http://www.sqlite.org/2016/sqlite-autoconf-3120000.tar.gz
 Summary  : SQL database engine
@@ -23,7 +23,7 @@ BuildRequires : pkg-config-dev
 BuildRequires : readline-dev
 Patch1: flags.patch
 Patch2: defaults.patch
-Patch3: truncate.patch
+Patch3: walmode.patch
 
 %description
 This is the SQLite extension for Tcl using the Tcl Extension
@@ -74,10 +74,10 @@ lib components for the sqlite-autoconf package.
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -fno-semantic-interposition -falign-functions=32 -O3 -flto "
-export FCFLAGS="$CFLAGS -fno-semantic-interposition -falign-functions=32 -O3 -flto "
-export FFLAGS="$CFLAGS -fno-semantic-interposition -falign-functions=32 -O3 -flto "
-export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -falign-functions=32 -O3 -flto "
+export CFLAGS="$CFLAGS -fno-semantic-interposition -flto -falign-functions=32 -O3 "
+export FCFLAGS="$CFLAGS -fno-semantic-interposition -flto -falign-functions=32 -O3 "
+export FFLAGS="$CFLAGS -fno-semantic-interposition -flto -falign-functions=32 -O3 "
+export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -flto -falign-functions=32 -O3 "
 %reconfigure --disable-static
 make V=1  %{?_smp_mflags} -j1
 
