@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3150000
-Release  : 39
+Release  : 40
 URL      : http://sqlite.org/2016/sqlite-autoconf-3150000.tar.gz
 Source0  : http://sqlite.org/2016/sqlite-autoconf-3150000.tar.gz
 Summary  : SQL database engine
@@ -25,6 +25,7 @@ BuildRequires : readline-dev
 Patch1: flags.patch
 Patch2: defaults.patch
 Patch3: walmode.patch
+Patch4: chunksize.patch
 
 %description
 This is the SQLite extension for Tcl using the Tcl Extension
@@ -70,6 +71,7 @@ lib components for the sqlite-autoconf package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export LANG=C

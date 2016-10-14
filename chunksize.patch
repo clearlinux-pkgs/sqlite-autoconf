@@ -1,0 +1,10 @@
+--- sqlite-autoconf-3150000/sqlite3.c~	2016-10-14 11:48:19.000000000 +0000
++++ sqlite-autoconf-3150000/sqlite3.c	2016-10-14 15:37:59.336527561 +0000
+@@ -34622,6 +34622,7 @@
+   pNew->pVfs = pVfs;
+   pNew->zPath = zFilename;
+   pNew->ctrlFlags = (u8)ctrlFlags;
++  pNew->szChunk = 512 * 1024;
+ #if SQLITE_MAX_MMAP_SIZE>0
+   pNew->mmapSizeMax = sqlite3GlobalConfig.szMmap;
+ #endif
