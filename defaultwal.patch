@@ -1,0 +1,10 @@
+--- sqlite-autoconf-3150000/sqlite3.c~	2016-10-14 15:37:59.000000000 +0000
++++ sqlite-autoconf-3150000/sqlite3.c	2016-10-14 15:47:22.325138823 +0000
+@@ -51127,6 +51126,7 @@
+     rc = sqlite3PagerSetPagesize(pPager, &szPageDflt, -1);
+     testcase( rc!=SQLITE_OK );
+   }
++  sqlite3PagerSetJournalMode(pPager, PAGER_JOURNALMODE_WAL);
+ 
+   /* Initialize the PCache object. */
+   if( rc==SQLITE_OK ){
