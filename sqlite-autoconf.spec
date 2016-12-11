@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3150200
-Release  : 43
+Release  : 44
 URL      : http://sqlite.org/2016/sqlite-autoconf-3150200.tar.gz
 Source0  : http://sqlite.org/2016/sqlite-autoconf-3150200.tar.gz
 Summary  : SQL database engine
@@ -15,7 +15,12 @@ Requires: sqlite-autoconf-lib
 Requires: sqlite-autoconf-doc
 BuildRequires : automake
 BuildRequires : automake-dev
+BuildRequires : gcc-dev32
+BuildRequires : gcc-libgcc32
+BuildRequires : gcc-libstdc++32
 BuildRequires : gettext-bin
+BuildRequires : glibc-dev32
+BuildRequires : glibc-libc32
 BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : m4
@@ -51,6 +56,16 @@ Provides: sqlite-autoconf-devel
 dev components for the sqlite-autoconf package.
 
 
+%package dev32
+Summary: dev32 components for the sqlite-autoconf package.
+Group: Default
+Requires: sqlite-autoconf-lib32
+Requires: sqlite-autoconf-bin
+
+%description dev32
+dev32 components for the sqlite-autoconf package.
+
+
 %package doc
 Summary: doc components for the sqlite-autoconf package.
 Group: Documentation
@@ -67,6 +82,14 @@ Group: Libraries
 lib components for the sqlite-autoconf package.
 
 
+%package lib32
+Summary: lib32 components for the sqlite-autoconf package.
+Group: Default
+
+%description lib32
+lib32 components for the sqlite-autoconf package.
+
+
 %prep
 %setup -q -n sqlite-autoconf-3150200
 %patch1 -p1
@@ -74,6 +97,9 @@ lib components for the sqlite-autoconf package.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+pushd ..
+cp -a sqlite-autoconf-3150200 build32
+popd
 
 %build
 export LANG=C
@@ -86,6 +112,13 @@ export FFLAGS="$CFLAGS -O3 -falign-functions=32 -flto -fno-semantic-interpositio
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -flto -fno-semantic-interposition "
 %reconfigure --disable-static
 make V=1  %{?_smp_mflags} -j1
+pushd ../build32/
+export CFLAGS="$CFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+%reconfigure --disable-static   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make V=1  %{?_smp_mflags} -j1
+popd
 
 %check
 export LANG=C
@@ -96,6 +129,15 @@ make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
 rm -rf %{buildroot}
+pushd ../build32/
+%make_install32
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do mv $i 32$i ; done
+popd
+fi
+popd
 %make_install
 
 %files
@@ -111,6 +153,11 @@ rm -rf %{buildroot}
 /usr/lib64/libsqlite3.so
 /usr/lib64/pkgconfig/sqlite3.pc
 
+%files dev32
+%defattr(-,root,root,-)
+/usr/lib32/libsqlite3.so
+/usr/lib32/pkgconfig/32sqlite3.pc
+
 %files doc
 %defattr(-,root,root,-)
 %doc /usr/share/man/man1/*
@@ -119,3 +166,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/lib64/libsqlite3.so.0
 /usr/lib64/libsqlite3.so.0.8.6
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libsqlite3.so.0
+/usr/lib32/libsqlite3.so.0.8.6
