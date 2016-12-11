@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3150200
-Release  : 42
+Release  : 43
 URL      : http://sqlite.org/2016/sqlite-autoconf-3150200.tar.gz
 Source0  : http://sqlite.org/2016/sqlite-autoconf-3150200.tar.gz
 Summary  : SQL database engine
@@ -108,8 +108,8 @@ rm -rf %{buildroot}
 %files dev
 %defattr(-,root,root,-)
 /usr/include/*.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libsqlite3.so
+/usr/lib64/pkgconfig/sqlite3.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -117,4 +117,5 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libsqlite3.so.0
+/usr/lib64/libsqlite3.so.0.8.6
