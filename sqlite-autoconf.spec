@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3180000
-Release  : 49
+Release  : 50
 URL      : http://sqlite.org/2017/sqlite-autoconf-3180000.tar.gz
 Source0  : http://sqlite.org/2017/sqlite-autoconf-3180000.tar.gz
 Summary  : SQL database engine
