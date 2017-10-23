@@ -1,1 +1,0 @@
-watchurl=opts=uversionmangle='s/3_8_/308/g\;s/_/0/' http://www.sqlite.org/ .*releaselog/(\d[_\d]*).html
