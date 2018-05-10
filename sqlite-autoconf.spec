@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3230100
-Release  : 60
+Release  : 61
 URL      : http://sqlite.org/2018/sqlite-autoconf-3230100.tar.gz
 Source0  : http://sqlite.org/2018/sqlite-autoconf-3230100.tar.gz
 Summary  : SQL database engine
