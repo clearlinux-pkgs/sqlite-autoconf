@@ -3,6 +3,7 @@ Configure miss: whether strerror_r returns char *
 Configure miss: editline/readline.h usability
 Configure miss: editline/readline.h presence
 Configure miss: editline/readline.h
+Configure miss: i686-generic-linux-gnu-gcc
 Configure miss: fullfsync
 Configure miss: whether strerror_r returns char *
 Configure miss: editline/readline.h usability

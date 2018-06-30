@@ -41,6 +41,8 @@ libsqlite3.so.0:sqlite3_column_blob
 libsqlite3.so.0:sqlite3_column_bytes
 libsqlite3.so.0:sqlite3_column_bytes16
 libsqlite3.so.0:sqlite3_column_count
+libsqlite3.so.0:sqlite3_column_database_name
+libsqlite3.so.0:sqlite3_column_database_name16
 libsqlite3.so.0:sqlite3_column_decltype
 libsqlite3.so.0:sqlite3_column_decltype16
 libsqlite3.so.0:sqlite3_column_double
@@ -48,6 +50,10 @@ libsqlite3.so.0:sqlite3_column_int
 libsqlite3.so.0:sqlite3_column_int64
 libsqlite3.so.0:sqlite3_column_name
 libsqlite3.so.0:sqlite3_column_name16
+libsqlite3.so.0:sqlite3_column_origin_name
+libsqlite3.so.0:sqlite3_column_origin_name16
+libsqlite3.so.0:sqlite3_column_table_name
+libsqlite3.so.0:sqlite3_column_table_name16
 libsqlite3.so.0:sqlite3_column_text
 libsqlite3.so.0:sqlite3_column_text16
 libsqlite3.so.0:sqlite3_column_type
@@ -204,6 +210,7 @@ libsqlite3.so.0:sqlite3_total_changes
 libsqlite3.so.0:sqlite3_trace
 libsqlite3.so.0:sqlite3_trace_v2
 libsqlite3.so.0:sqlite3_transfer_bindings
+libsqlite3.so.0:sqlite3_unlock_notify
 libsqlite3.so.0:sqlite3_update_hook
 libsqlite3.so.0:sqlite3_uri_boolean
 libsqlite3.so.0:sqlite3_uri_int64
