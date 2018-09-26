@@ -3,3 +3,5 @@
 # automatically. One name per line, no whitespace.
 #
 readline-dev
+zlib-dev
+zlib-dev32
