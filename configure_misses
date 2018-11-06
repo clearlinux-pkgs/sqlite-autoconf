@@ -10,4 +10,3 @@ Configure miss: editline/readline.h presence
 Configure miss: editline/readline.h
 Configure miss: library containing tgetent
 Configure miss: library containing readline
-Configure miss: library containing deflate
