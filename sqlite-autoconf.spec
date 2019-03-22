@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3270200
-Release  : 68
+Release  : 69
 URL      : http://sqlite.org/2019/sqlite-autoconf-3270200.tar.gz
 Source0  : http://sqlite.org/2019/sqlite-autoconf-3270200.tar.gz
 Summary  : SQL database engine
@@ -26,6 +26,7 @@ BuildRequires : libtool-dev
 BuildRequires : m4
 BuildRequires : ncurses-dev
 BuildRequires : pkg-config-dev
+BuildRequires : pkgconfig(zlib)
 BuildRequires : readline-dev
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
@@ -34,6 +35,8 @@ Patch2: defaults.patch
 Patch3: walmode.patch
 Patch4: chunksize.patch
 Patch5: defaultwal.patch
+Patch6: CVE-2019-9936.patch
+Patch7: CVE-2019-9937.patch
 
 %description
 This is the SQLite extension for Tcl using the Tcl Extension
@@ -42,6 +45,7 @@ Architecture (TEA).  For additional information on SQLite see
 %package bin
 Summary: bin components for the sqlite-autoconf package.
 Group: Binaries
+Requires: sqlite-autoconf-man = %{version}-%{release}
 
 %description bin
 bin components for the sqlite-autoconf package.
@@ -100,6 +104,8 @@ man components for the sqlite-autoconf package.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 pushd ..
 cp -a sqlite-autoconf-3270200 build32
 popd
@@ -109,14 +115,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551464651
+export SOURCE_DATE_EPOCH=1553290974
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %reconfigure --disable-static
 make  %{?_smp_mflags} -j1
 pushd ../build32/
@@ -139,7 +145,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1551464651
+export SOURCE_DATE_EPOCH=1553290974
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
