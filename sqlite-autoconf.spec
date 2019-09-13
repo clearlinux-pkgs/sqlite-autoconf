@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3290000
-Release  : 71
+Release  : 72
 URL      : https://sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
 Source0  : https://sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
 Summary  : SQL database engine
@@ -26,6 +26,7 @@ BuildRequires : libtool-dev
 BuildRequires : m4
 BuildRequires : ncurses-dev
 BuildRequires : pkg-config-dev
+BuildRequires : pkgconfig(zlib)
 BuildRequires : readline-dev
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
@@ -34,6 +35,7 @@ Patch2: defaults.patch
 Patch3: walmode.patch
 Patch4: chunksize.patch
 Patch5: defaultwal.patch
+Patch6: CVE-2019-16168.patch
 
 %description
 This is the SQLite extension for Tcl using the Tcl Extension
@@ -101,6 +103,7 @@ man components for the sqlite-autoconf package.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 pushd ..
 cp -a sqlite-autoconf-3290000 build32
 popd
@@ -110,7 +113,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1562967557
+export SOURCE_DATE_EPOCH=1568411331
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -124,9 +127,9 @@ make  %{?_smp_mflags} -j1
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %reconfigure --disable-static   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags} -j1
 popd
@@ -141,7 +144,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1562967557
+export SOURCE_DATE_EPOCH=1568411331
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -163,7 +166,8 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/sqlite3.h
+/usr/include/sqlite3ext.h
 /usr/lib64/libsqlite3.so
 /usr/lib64/pkgconfig/sqlite3.pc
 
