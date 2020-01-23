@@ -3,12 +3,3 @@ defaults.patch
 walmode.patch
 chunksize.patch
 defaultwal.patch
-CVE-2019-19244.patch
-CVE-2019-19880.patch
-CVE-2019-19925.patch
-CVE-2019-19923.patch
-CVE-2019-20218.patch
-CVE-2019-19924.patch
-CVE-2019-19926.patch
-CVE-2019-19959.patch
-CVE-2019-19645.patch
