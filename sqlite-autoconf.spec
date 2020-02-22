@@ -4,7 +4,7 @@
 #
 Name     : sqlite-autoconf
 Version  : 3.31.1
-Release  : 85
+Release  : 86
 URL      : https://sqlite.org/2020/sqlite-autoconf-3310100.tar.gz
 Source0  : https://sqlite.org/2020/sqlite-autoconf-3310100.tar.gz
 Summary  : SQL database engine
@@ -34,6 +34,7 @@ Patch2: defaults.patch
 Patch3: walmode.patch
 Patch4: chunksize.patch
 Patch5: defaultwal.patch
+Patch6: CVE-2020-9327.patch
 
 %description
 This is the SQLite extension for Tcl using the Tcl Extension
@@ -102,6 +103,7 @@ cd %{_builddir}/sqlite-autoconf-3310100
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 pushd ..
 cp -a sqlite-autoconf-3310100 build32
 popd
@@ -111,7 +113,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1580162737
+export SOURCE_DATE_EPOCH=1582334549
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -142,7 +144,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1580162737
+export SOURCE_DATE_EPOCH=1582334549
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

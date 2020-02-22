@@ -3,3 +3,4 @@ defaults.patch
 walmode.patch
 chunksize.patch
 defaultwal.patch
+CVE-2020-9327.patch
