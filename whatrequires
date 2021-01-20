@@ -1,4 +1,5 @@
 # This file contains recursive sources that require this package
+compat-python38
 python
 python3
 python37

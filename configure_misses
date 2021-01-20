@@ -1,12 +1,8 @@
 Configure miss: fullfsync
 Configure miss: whether strerror_r returns char *
-Configure miss: editline/readline.h usability
-Configure miss: editline/readline.h presence
 Configure miss: editline/readline.h
 Configure miss: fullfsync
 Configure miss: whether strerror_r returns char *
-Configure miss: editline/readline.h usability
-Configure miss: editline/readline.h presence
 Configure miss: editline/readline.h
 Configure miss: library containing tgetent
 Configure miss: library containing readline
