@@ -1,7 +1,9 @@
 Configure miss: fullfsync
+Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: whether strerror_r returns char *
 Configure miss: editline/readline.h
 Configure miss: fullfsync
+Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: whether strerror_r returns char *
 Configure miss: editline/readline.h
 Configure miss: library containing tgetent
