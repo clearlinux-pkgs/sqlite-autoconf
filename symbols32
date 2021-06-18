@@ -86,6 +86,7 @@ libsqlite3.so.0:sqlite3_db_readonly
 libsqlite3.so.0:sqlite3_db_release_memory
 libsqlite3.so.0:sqlite3_db_status
 libsqlite3.so.0:sqlite3_declare_vtab
+libsqlite3.so.0:sqlite3_deserialize
 libsqlite3.so.0:sqlite3_drop_modules
 libsqlite3.so.0:sqlite3_enable_load_extension
 libsqlite3.so.0:sqlite3_enable_shared_cache
@@ -179,6 +180,7 @@ libsqlite3.so.0:sqlite3_result_zeroblob64
 libsqlite3.so.0:sqlite3_rollback_hook
 libsqlite3.so.0:sqlite3_rtree_geometry_callback
 libsqlite3.so.0:sqlite3_rtree_query_callback
+libsqlite3.so.0:sqlite3_serialize
 libsqlite3.so.0:sqlite3_set_authorizer
 libsqlite3.so.0:sqlite3_set_auxdata
 libsqlite3.so.0:sqlite3_set_last_insert_rowid
