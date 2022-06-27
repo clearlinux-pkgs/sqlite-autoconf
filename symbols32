@@ -84,6 +84,7 @@ libsqlite3.so.0:sqlite3_db_config
 libsqlite3.so.0:sqlite3_db_filename
 libsqlite3.so.0:sqlite3_db_handle
 libsqlite3.so.0:sqlite3_db_mutex
+libsqlite3.so.0:sqlite3_db_name
 libsqlite3.so.0:sqlite3_db_readonly
 libsqlite3.so.0:sqlite3_db_release_memory
 libsqlite3.so.0:sqlite3_db_status
