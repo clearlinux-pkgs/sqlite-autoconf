@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : sqlite-autoconf
 Version  : 3.39.4
-Release  : 118
+Release  : 119
 URL      : https://sqlite.org/2022/sqlite-autoconf-3390400.tar.gz
 Source0  : https://sqlite.org/2022/sqlite-autoconf-3390400.tar.gz
 Summary  : SQL database engine
@@ -130,15 +130,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1664485090
+export SOURCE_DATE_EPOCH=1664906786
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %reconfigure  CPPFLAGS="-DSQLITE_ENABLE_DBSTAT_VTAB=1  -DSQLITE_ENABLE_JSON=1"
 make
 pushd ../build32/
@@ -161,7 +161,7 @@ cd ../build32;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1664485090
+export SOURCE_DATE_EPOCH=1664906786
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
