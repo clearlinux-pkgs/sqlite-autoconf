@@ -240,6 +240,7 @@ libsqlite3.so.0:sqlite3_value_bytes
 libsqlite3.so.0:sqlite3_value_bytes16
 libsqlite3.so.0:sqlite3_value_double
 libsqlite3.so.0:sqlite3_value_dup
+libsqlite3.so.0:sqlite3_value_encoding
 libsqlite3.so.0:sqlite3_value_free
 libsqlite3.so.0:sqlite3_value_frombind
 libsqlite3.so.0:sqlite3_value_int
