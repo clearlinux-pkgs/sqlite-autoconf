@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : sqlite-autoconf
-Version  : 3.40.0
-Release  : 120
-URL      : https://sqlite.org/2022/sqlite-autoconf-3400000.tar.gz
-Source0  : https://sqlite.org/2022/sqlite-autoconf-3400000.tar.gz
+Version  : 3.40.1
+Release  : 121
+URL      : https://sqlite.org/2022/sqlite-autoconf-3400100.tar.gz
+Source0  : https://sqlite.org/2022/sqlite-autoconf-3400100.tar.gz
 Summary  : SQL database engine
 Group    : Development/Tools
 License  : Public-Domain
@@ -30,6 +30,9 @@ BuildRequires : pkg-config-dev
 BuildRequires : readline-dev
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 Patch1: flags.patch
 Patch2: defaults.patch
 Patch3: walmode.patch
@@ -114,15 +117,15 @@ staticdev32 components for the sqlite-autoconf package.
 
 
 %prep
-%setup -q -n sqlite-autoconf-3400000
-cd %{_builddir}/sqlite-autoconf-3400000
+%setup -q -n sqlite-autoconf-3400100
+cd %{_builddir}/sqlite-autoconf-3400100
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 pushd ..
-cp -a sqlite-autoconf-3400000 build32
+cp -a sqlite-autoconf-3400100 build32
 popd
 
 %build
@@ -130,15 +133,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1668624936
+export SOURCE_DATE_EPOCH=1672248997
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
 %reconfigure  CPPFLAGS="-DSQLITE_ENABLE_DBSTAT_VTAB=1  -DSQLITE_ENABLE_JSON=1"
 make
 pushd ../build32/
@@ -161,7 +164,7 @@ cd ../build32;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1668624936
+export SOURCE_DATE_EPOCH=1672248997
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
