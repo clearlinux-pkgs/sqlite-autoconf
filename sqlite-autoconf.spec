@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : sqlite-autoconf
-Version  : 3.40.1
-Release  : 121
-URL      : https://sqlite.org/2022/sqlite-autoconf-3400100.tar.gz
-Source0  : https://sqlite.org/2022/sqlite-autoconf-3400100.tar.gz
+Version  : 3.41.0
+Release  : 122
+URL      : https://sqlite.org/2023/sqlite-autoconf-3410000.tar.gz
+Source0  : https://sqlite.org/2023/sqlite-autoconf-3410000.tar.gz
 Summary  : SQL database engine
 Group    : Development/Tools
 License  : Public-Domain
@@ -35,9 +35,8 @@ BuildRequires : zlib-dev32
 %define debug_package %{nil}
 Patch1: flags.patch
 Patch2: defaults.patch
-Patch3: walmode.patch
-Patch4: chunksize.patch
-Patch5: defaultwal.patch
+Patch3: chunksize.patch
+Patch4: defaultwal.patch
 
 %description
 This is the SQLite extension for Tcl using the Tcl Extension
@@ -117,15 +116,14 @@ staticdev32 components for the sqlite-autoconf package.
 
 
 %prep
-%setup -q -n sqlite-autoconf-3400100
-cd %{_builddir}/sqlite-autoconf-3400100
+%setup -q -n sqlite-autoconf-3410000
+cd %{_builddir}/sqlite-autoconf-3410000
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 pushd ..
-cp -a sqlite-autoconf-3400100 build32
+cp -a sqlite-autoconf-3410000 build32
 popd
 
 %build
@@ -133,7 +131,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1672248997
+export SOURCE_DATE_EPOCH=1677022720
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -164,7 +162,7 @@ cd ../build32;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1672248997
+export SOURCE_DATE_EPOCH=1677022720
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

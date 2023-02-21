@@ -1,5 +1,5 @@
 flags.patch
 defaults.patch
-walmode.patch
+#walmode.patch
 chunksize.patch
 defaultwal.patch
