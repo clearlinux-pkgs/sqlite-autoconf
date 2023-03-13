@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : sqlite-autoconf
-Version  : 3.41.0
-Release  : 122
-URL      : https://sqlite.org/2023/sqlite-autoconf-3410000.tar.gz
-Source0  : https://sqlite.org/2023/sqlite-autoconf-3410000.tar.gz
+Version  : 3.41.1
+Release  : 123
+URL      : https://sqlite.org/2023/sqlite-autoconf-3410100.tar.gz
+Source0  : https://sqlite.org/2023/sqlite-autoconf-3410100.tar.gz
 Summary  : SQL database engine
 Group    : Development/Tools
 License  : Public-Domain
@@ -116,14 +116,14 @@ staticdev32 components for the sqlite-autoconf package.
 
 
 %prep
-%setup -q -n sqlite-autoconf-3410000
-cd %{_builddir}/sqlite-autoconf-3410000
+%setup -q -n sqlite-autoconf-3410100
+cd %{_builddir}/sqlite-autoconf-3410100
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 pushd ..
-cp -a sqlite-autoconf-3410000 build32
+cp -a sqlite-autoconf-3410100 build32
 popd
 
 %build
@@ -131,7 +131,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1677022720
+export SOURCE_DATE_EPOCH=1678728357
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -162,7 +162,7 @@ cd ../build32;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1677022720
+export SOURCE_DATE_EPOCH=1678728357
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
