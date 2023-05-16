@@ -5,29 +5,23 @@
 #
 %define keepstatic 1
 Name     : sqlite-autoconf
-Version  : 3.41.2
-Release  : 124
-URL      : https://sqlite.org/2023/sqlite-autoconf-3410200.tar.gz
-Source0  : https://sqlite.org/2023/sqlite-autoconf-3410200.tar.gz
+Version  : 3.42.0
+Release  : 125
+URL      : https://sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
+Source0  : https://sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
 Summary  : SQL database engine
 Group    : Development/Tools
 License  : Public-Domain
 Requires: sqlite-autoconf-bin = %{version}-%{release}
 Requires: sqlite-autoconf-lib = %{version}-%{release}
 Requires: sqlite-autoconf-man = %{version}-%{release}
-BuildRequires : automake
-BuildRequires : automake-dev
+BuildRequires : buildreq-configure
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
-BuildRequires : gettext-bin
 BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
-BuildRequires : libtool
-BuildRequires : libtool-dev
-BuildRequires : m4
 BuildRequires : ncurses-dev
-BuildRequires : pkg-config-dev
 BuildRequires : readline-dev
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
@@ -117,14 +111,17 @@ staticdev32 components for the sqlite-autoconf package.
 
 
 %prep
-%setup -q -n sqlite-autoconf-3410200
-cd %{_builddir}/sqlite-autoconf-3410200
+%setup -q -n sqlite-autoconf-3420000
+cd %{_builddir}/sqlite-autoconf-3420000
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 pushd ..
-cp -a sqlite-autoconf-3410200 build32
+cp -a sqlite-autoconf-3420000 build32
+popd
+pushd ..
+cp -a sqlite-autoconf-3420000 buildavx2
 popd
 
 %build
@@ -132,15 +129,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1679507256
+export SOURCE_DATE_EPOCH=1684271117
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 %reconfigure  CPPFLAGS="-DSQLITE_ENABLE_DBSTAT_VTAB=1  -DSQLITE_ENABLE_JSON=1"
 make
 pushd ../build32/
@@ -152,6 +149,16 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %reconfigure  CPPFLAGS="-DSQLITE_ENABLE_DBSTAT_VTAB=1  -DSQLITE_ENABLE_JSON=1"  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make
 popd
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
+%reconfigure  CPPFLAGS="-DSQLITE_ENABLE_DBSTAT_VTAB=1  -DSQLITE_ENABLE_JSON=1"
+make
+popd
 
 %check
 export LANG=C.UTF-8
@@ -161,9 +168,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make check
 cd ../build32;
 make check || :
+cd ../buildavx2;
+make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1679507256
+export SOURCE_DATE_EPOCH=1684271117
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -180,17 +189,23 @@ for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
 popd
+pushd ../buildavx2/
+%make_install_v3
+popd
 %make_install
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/sqlite3
 /usr/bin/sqlite3
 
 %files dev
 %defattr(-,root,root,-)
+/V3/usr/lib64/libsqlite3.so
 /usr/include/sqlite3.h
 /usr/include/sqlite3ext.h
 /usr/lib64/libsqlite3.so
@@ -204,6 +219,8 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/V3/usr/lib64/libsqlite3.so.0
+/V3/usr/lib64/libsqlite3.so.0.8.6
 /usr/lib64/libsqlite3.so.0
 /usr/lib64/libsqlite3.so.0.8.6
 
