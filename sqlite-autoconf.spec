@@ -6,7 +6,7 @@
 %define keepstatic 1
 Name     : sqlite-autoconf
 Version  : 3.42.0
-Release  : 125
+Release  : 126
 URL      : https://sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
 Source0  : https://sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
 Summary  : SQL database engine
@@ -129,7 +129,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1684271117
+export SOURCE_DATE_EPOCH=1685503725
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -172,7 +172,7 @@ cd ../buildavx2;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1684271117
+export SOURCE_DATE_EPOCH=1685503725
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -205,7 +205,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/V3/usr/lib64/libsqlite3.so
 /usr/include/sqlite3.h
 /usr/include/sqlite3ext.h
 /usr/lib64/libsqlite3.so
@@ -219,7 +218,6 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libsqlite3.so.0
 /V3/usr/lib64/libsqlite3.so.0.8.6
 /usr/lib64/libsqlite3.so.0
 /usr/lib64/libsqlite3.so.0.8.6
