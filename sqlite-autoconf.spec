@@ -5,10 +5,10 @@
 #
 %define keepstatic 1
 Name     : sqlite-autoconf
-Version  : 3.42.0
-Release  : 126
-URL      : https://sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
-Source0  : https://sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
+Version  : 3.41.2
+Release  : 127
+URL      : https://sqlite.org/2023/sqlite-autoconf-3410200.tar.gz
+Source0  : https://sqlite.org/2023/sqlite-autoconf-3410200.tar.gz
 Summary  : SQL database engine
 Group    : Development/Tools
 License  : Public-Domain
@@ -111,17 +111,17 @@ staticdev32 components for the sqlite-autoconf package.
 
 
 %prep
-%setup -q -n sqlite-autoconf-3420000
-cd %{_builddir}/sqlite-autoconf-3420000
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%setup -q -n sqlite-autoconf-3410200
+cd %{_builddir}/sqlite-autoconf-3410200
+%patch -P 1 -p1
+%patch -P 2 -p1
+%patch -P 3 -p1
+%patch -P 4 -p1
 pushd ..
-cp -a sqlite-autoconf-3420000 build32
+cp -a sqlite-autoconf-3410200 build32
 popd
 pushd ..
-cp -a sqlite-autoconf-3420000 buildavx2
+cp -a sqlite-autoconf-3410200 buildavx2
 popd
 
 %build
@@ -129,7 +129,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1685503725
+export SOURCE_DATE_EPOCH=1686158548
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -172,7 +172,7 @@ cd ../buildavx2;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1685503725
+export SOURCE_DATE_EPOCH=1686158548
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
