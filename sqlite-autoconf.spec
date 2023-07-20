@@ -6,7 +6,7 @@
 %define keepstatic 1
 Name     : sqlite-autoconf
 Version  : 3.41.2
-Release  : 127
+Release  : 128
 URL      : https://sqlite.org/2023/sqlite-autoconf-3410200.tar.gz
 Source0  : https://sqlite.org/2023/sqlite-autoconf-3410200.tar.gz
 Summary  : SQL database engine
@@ -129,7 +129,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1686158548
+export SOURCE_DATE_EPOCH=1689832695
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -172,7 +172,7 @@ cd ../buildavx2;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1686158548
+export SOURCE_DATE_EPOCH=1689832695
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
