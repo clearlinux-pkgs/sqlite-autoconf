@@ -4,6 +4,8 @@ Configure miss: editline/readline.h
 Configure miss: fullfsync
 Configure miss: fullfsync
 Configure miss: fullfsync
+Configure miss: gcc option to enable large file support
+Configure miss: gcc option to enable large file support
 Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: gcc options needed to detect all undeclared functions
