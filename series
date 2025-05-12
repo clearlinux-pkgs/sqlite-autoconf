@@ -1,5 +1,6 @@
-flags.patch
+0001-Hard-code-flags-as-this-package-builds-oddly.patch
 defaults.patch
 #walmode.patch
 chunksize.patch
 defaultwal.patch
+

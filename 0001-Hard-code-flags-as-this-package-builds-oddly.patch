@@ -1,0 +1,26 @@
+From 1b5b4a8509e12f329bc19fe3c0fca1c3f674aae4 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Mon, 12 May 2025 13:32:39 -0700
+Subject: [PATCH] Hard code flags as this package builds oddly
+
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ Makefile.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 2f69082..0c3ecb5 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -51,7 +51,7 @@ CC = @CC@
+ ENABLE_LIB_SHARED = @ENABLE_LIB_SHARED@
+ ENABLE_LIB_STATIC = @ENABLE_LIB_STATIC@
+ 
+-CFLAGS = @CFLAGS@ @CPPFLAGS@
++CFLAGS = @CFLAGS@ @CPPFLAGS@ -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_JSON=1 -DSQLITE_MAX_WORKER_THREADS=16 -DSQLITE_DEFAULT_WORKER_THREADS=4 -DSQLITE_DEFAULT_PAGE_SIZE=4096 -DSQLITE_TEMP_STORE=2 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1 -DSQLITE_MAX_DEFAULT_PAGE_SIZE=32768 -DSQLITE_DEFAULT_SYNCHRONOUS=1 -DSQLITE_DEFAULT_MMAP_SIZE=67108864 -DSQLITE_ENABLE_COLUMN_METADATA
+ #
+ # $(LDFLAGS.configure) represents any LDFLAGS=... the client passes to
+ # configure. See main.mk.
+-- 
+2.49.0
+
