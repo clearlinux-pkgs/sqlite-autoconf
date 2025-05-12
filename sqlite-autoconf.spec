@@ -8,16 +8,16 @@
 %define keepstatic 1
 Name     : sqlite-autoconf
 Version  : 3.49.2
-Release  : 132
+Release  : 134
 URL      : https://sqlite.org/2025/sqlite-autoconf-3490200.tar.gz
 Source0  : https://sqlite.org/2025/sqlite-autoconf-3490200.tar.gz
 Summary  : SQL database engine
 Group    : Development/Tools
 License  : BSD-2-Clause Public-Domain
 Requires: sqlite-autoconf-bin = %{version}-%{release}
+Requires: sqlite-autoconf-lib = %{version}-%{release}
 Requires: sqlite-autoconf-license = %{version}-%{release}
 Requires: sqlite-autoconf-man = %{version}-%{release}
-Requires: sqlite-autoconf-plugins = %{version}-%{release}
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
@@ -57,6 +57,7 @@ bin components for the sqlite-autoconf package.
 %package dev
 Summary: dev components for the sqlite-autoconf package.
 Group: Development
+Requires: sqlite-autoconf-lib = %{version}-%{release}
 Requires: sqlite-autoconf-bin = %{version}-%{release}
 Provides: sqlite-autoconf-devel = %{version}-%{release}
 Requires: sqlite-autoconf = %{version}-%{release}
@@ -68,11 +69,30 @@ dev components for the sqlite-autoconf package.
 %package dev32
 Summary: dev32 components for the sqlite-autoconf package.
 Group: Default
+Requires: sqlite-autoconf-lib32 = %{version}-%{release}
 Requires: sqlite-autoconf-bin = %{version}-%{release}
 Requires: sqlite-autoconf-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the sqlite-autoconf package.
+
+
+%package lib
+Summary: lib components for the sqlite-autoconf package.
+Group: Libraries
+Requires: sqlite-autoconf-license = %{version}-%{release}
+
+%description lib
+lib components for the sqlite-autoconf package.
+
+
+%package lib32
+Summary: lib32 components for the sqlite-autoconf package.
+Group: Default
+Requires: sqlite-autoconf-license = %{version}-%{release}
+
+%description lib32
+lib32 components for the sqlite-autoconf package.
 
 
 %package license
@@ -91,14 +111,6 @@ Group: Default
 man components for the sqlite-autoconf package.
 
 
-%package plugins
-Summary: plugins components for the sqlite-autoconf package.
-Group: Default
-
-%description plugins
-plugins components for the sqlite-autoconf package.
-
-
 %package staticdev
 Summary: staticdev components for the sqlite-autoconf package.
 Group: Default
@@ -106,6 +118,15 @@ Requires: sqlite-autoconf-dev = %{version}-%{release}
 
 %description staticdev
 staticdev components for the sqlite-autoconf package.
+
+
+%package staticdev32
+Summary: staticdev32 components for the sqlite-autoconf package.
+Group: Default
+Requires: sqlite-autoconf-dev = %{version}-%{release}
+
+%description staticdev32
+staticdev32 components for the sqlite-autoconf package.
 
 
 %prep
@@ -127,7 +148,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1747083158
+export SOURCE_DATE_EPOCH=1747087771
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -143,7 +164,7 @@ FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 export GOAMD64=v2
-./configure --prefix=/usr && make
+./configure --prefix=/usr --libdir=/usr/lib64 && make
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig:/usr/share/pkgconfig"
@@ -151,7 +172,7 @@ ASFLAGS="${CLEAR_INTERMEDIATE_ASFLAGS}${CLEAR_INTERMEDIATE_ASFLAGS:+ }--32"
 CFLAGS="${CLEAR_INTERMEDIATE_CFLAGS}${CLEAR_INTERMEDIATE_CFLAGS:+ }-m32 -mstackrealign"
 CXXFLAGS="${CLEAR_INTERMEDIATE_CXXFLAGS}${CLEAR_INTERMEDIATE_CXXFLAGS:+ }-m32 -mstackrealign"
 LDFLAGS="${CLEAR_INTERMEDIATE_LDFLAGS}${CLEAR_INTERMEDIATE_LDFLAGS:+ }-m32 -mstackrealign"
-./configure --prefix=/usr && make
+./configure --prefix=/usr --libdir=/usr/lib64 && make   ; ./configure --prefix=/usr --libdir=/usr/lib32 && make
 popd
 pushd ../buildavx2
 GOAMD64=v3
@@ -160,7 +181,7 @@ CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS -march=x86-64-v3 "
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS -march=x86-64-v3 "
-./configure --prefix=/usr && make
+./configure --prefix=/usr --libdir=/usr/lib64 && make
 popd
 
 %install
@@ -178,7 +199,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1747083158
+export SOURCE_DATE_EPOCH=1747087771
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/sqlite-autoconf
 cp %{_builddir}/sqlite-autoconf-3490200/autosetup/LICENSE %{buildroot}/usr/share/package-licenses/sqlite-autoconf/34b2f1d7acba3eeb992e4281307640989cd08d0a || :
@@ -218,13 +239,25 @@ GOAMD64=v2
 %defattr(-,root,root,-)
 /usr/include/sqlite3.h
 /usr/include/sqlite3ext.h
-/usr/lib/libsqlite3.so
+/usr/lib64/libsqlite3.so
 /usr/lib64/pkgconfig/sqlite3.pc
 
 %files dev32
 %defattr(-,root,root,-)
+/usr/lib32/libsqlite3.so
 /usr/lib32/pkgconfig/32sqlite3.pc
 /usr/lib32/pkgconfig/sqlite3.pc
+
+%files lib
+%defattr(-,root,root,-)
+/V3/usr/lib64/libsqlite3.so.3.49.2
+/usr/lib64/libsqlite3.so.0
+/usr/lib64/libsqlite3.so.3.49.2
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libsqlite3.so.0
+/usr/lib32/libsqlite3.so.3.49.2
 
 %files license
 %defattr(0644,root,root,0755)
@@ -234,12 +267,10 @@ GOAMD64=v2
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/sqlite3.1
 
-%files plugins
-%defattr(-,root,root,-)
-/V3/usr/lib/libsqlite3.so.3.49.2
-/usr/lib/libsqlite3.so.0
-/usr/lib/libsqlite3.so.3.49.2
-
 %files staticdev
 %defattr(-,root,root,-)
-/usr/lib/libsqlite3.a
+/usr/lib64/libsqlite3.a
+
+%files staticdev32
+%defattr(-,root,root,-)
+/usr/lib32/libsqlite3.a

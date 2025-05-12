@@ -1,1 +1,1 @@
-./configure --prefix=/usr && make
+./configure --prefix=/usr --libdir=/usr/lib64 && make
