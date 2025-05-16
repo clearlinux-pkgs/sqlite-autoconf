@@ -8,7 +8,7 @@
 %define keepstatic 1
 Name     : sqlite-autoconf
 Version  : 3.49.2
-Release  : 135
+Release  : 136
 URL      : https://sqlite.org/2025/sqlite-autoconf-3490200.tar.gz
 Source0  : https://sqlite.org/2025/sqlite-autoconf-3490200.tar.gz
 Summary  : SQL database engine
@@ -81,6 +81,7 @@ dev32 components for the sqlite-autoconf package.
 Summary: lib components for the sqlite-autoconf package.
 Group: Libraries
 Requires: sqlite-autoconf-license = %{version}-%{release}
+Provides: libsqlite3.so()(64bit)
 Provides: libsqlite3.so.0()(64bit)
 
 %description lib
@@ -91,6 +92,7 @@ lib components for the sqlite-autoconf package.
 Summary: lib32 components for the sqlite-autoconf package.
 Group: Default
 Requires: sqlite-autoconf-license = %{version}-%{release}
+Provides: libsqlite3.so
 Provides: libsqlite3.so.0
 
 %description lib32
@@ -150,7 +152,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1747090386
+export SOURCE_DATE_EPOCH=1747416647
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -201,7 +203,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1747090386
+export SOURCE_DATE_EPOCH=1747416647
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/sqlite-autoconf
 cp %{_builddir}/sqlite-autoconf-3490200/autosetup/LICENSE %{buildroot}/usr/share/package-licenses/sqlite-autoconf/34b2f1d7acba3eeb992e4281307640989cd08d0a || :
