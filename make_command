@@ -1,1 +1,1 @@
-./configure --prefix=/usr --libdir=/usr/lib64 && make
+./configure --prefix=/usr --libdir=/usr/lib64 --soname=legacy && make

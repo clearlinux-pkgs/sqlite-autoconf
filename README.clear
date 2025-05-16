@@ -1,0 +1,4 @@
+Special package for building, configure isn't autotools
+
+%configure macro is broken for this so work around is putting
+special instructions into make calls

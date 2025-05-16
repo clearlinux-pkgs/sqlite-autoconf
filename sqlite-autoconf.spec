@@ -8,7 +8,7 @@
 %define keepstatic 1
 Name     : sqlite-autoconf
 Version  : 3.49.2
-Release  : 136
+Release  : 137
 URL      : https://sqlite.org/2025/sqlite-autoconf-3490200.tar.gz
 Source0  : https://sqlite.org/2025/sqlite-autoconf-3490200.tar.gz
 Summary  : SQL database engine
@@ -81,8 +81,6 @@ dev32 components for the sqlite-autoconf package.
 Summary: lib components for the sqlite-autoconf package.
 Group: Libraries
 Requires: sqlite-autoconf-license = %{version}-%{release}
-Provides: libsqlite3.so()(64bit)
-Provides: libsqlite3.so.0()(64bit)
 
 %description lib
 lib components for the sqlite-autoconf package.
@@ -92,8 +90,6 @@ lib components for the sqlite-autoconf package.
 Summary: lib32 components for the sqlite-autoconf package.
 Group: Default
 Requires: sqlite-autoconf-license = %{version}-%{release}
-Provides: libsqlite3.so
-Provides: libsqlite3.so.0
 
 %description lib32
 lib32 components for the sqlite-autoconf package.
@@ -152,7 +148,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1747416647
+export SOURCE_DATE_EPOCH=1747420145
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -168,7 +164,7 @@ FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 export GOAMD64=v2
-./configure --prefix=/usr --libdir=/usr/lib64 && make
+./configure --prefix=/usr --libdir=/usr/lib64 --soname=legacy && make
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig:/usr/share/pkgconfig"
@@ -176,7 +172,7 @@ ASFLAGS="${CLEAR_INTERMEDIATE_ASFLAGS}${CLEAR_INTERMEDIATE_ASFLAGS:+ }--32"
 CFLAGS="${CLEAR_INTERMEDIATE_CFLAGS}${CLEAR_INTERMEDIATE_CFLAGS:+ }-m32 -mstackrealign"
 CXXFLAGS="${CLEAR_INTERMEDIATE_CXXFLAGS}${CLEAR_INTERMEDIATE_CXXFLAGS:+ }-m32 -mstackrealign"
 LDFLAGS="${CLEAR_INTERMEDIATE_LDFLAGS}${CLEAR_INTERMEDIATE_LDFLAGS:+ }-m32 -mstackrealign"
-./configure --prefix=/usr --libdir=/usr/lib64 && make   ; ./configure --prefix=/usr --libdir=/usr/lib32 && make
+./configure --prefix=/usr --libdir=/usr/lib64 --soname=legacy && make   ; ./configure --prefix=/usr --libdir=/usr/lib32 --soname=legacy && make
 popd
 pushd ../buildavx2
 GOAMD64=v3
@@ -185,7 +181,7 @@ CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS -march=x86-64-v3 "
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS -march=x86-64-v3 "
-./configure --prefix=/usr --libdir=/usr/lib64 && make
+./configure --prefix=/usr --libdir=/usr/lib64 --soname=legacy && make
 popd
 
 %install
@@ -203,7 +199,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1747416647
+export SOURCE_DATE_EPOCH=1747420145
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/sqlite-autoconf
 cp %{_builddir}/sqlite-autoconf-3490200/autosetup/LICENSE %{buildroot}/usr/share/package-licenses/sqlite-autoconf/34b2f1d7acba3eeb992e4281307640989cd08d0a || :
